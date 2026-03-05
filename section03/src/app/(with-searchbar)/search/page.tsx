@@ -1,8 +1,17 @@
+import books from "@/mock/books.json";
+import BookItem from "@/components/book-item";
+
+//검색결과 페이지
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q: string }>; //q:"한입" 구조분해 + 타입선언
+  searchParams: Promise<{ q?: string }>;
 }) {
-  const { q } = await searchParams;
-  return <div>Search 페이지: {q}</div>;
+  return (
+    <div>
+      {books.map((book) => (
+        <BookItem key={book.id} {...book} />
+      ))}
+    </div>
+  );
 }
