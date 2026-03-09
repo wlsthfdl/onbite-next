@@ -6,7 +6,7 @@ import { BookData } from "@/types";
 async function AllBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_UPL}/book`,
-    { cache: "no-store" }, //캐시 안됨(nest 15버전부터 기본은 캐시안되는 걸로 바뀜)
+    { cache: "force-cache" }, //캐시 안됨(nest 15버전부터 기본은 캐시안되는 걸로 바뀜)
   );
   if (!response.ok) {
     return <div>오류가 발생했습니다..</div>;

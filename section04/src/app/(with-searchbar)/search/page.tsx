@@ -10,6 +10,7 @@ export default async function Page({
   //fetch 실행(요청) -> 서버 검색 -> JSON반환
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_UPL}/book/search?q=${searchParams.q}`,
+    { cache: "force-cache" },
   );
   if (!response.ok) {
     return <div>오류가 발생했습니다..</div>;

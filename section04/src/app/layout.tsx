@@ -6,10 +6,8 @@ import { BookData } from "@/types";
 async function Footer() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_UPL}/book`,
-    //book/page.tsx와 중복되는 코드지만,
-    //request Memoization이 자동으로 동작하고 있기 떄문에 한 번만 요청
-    //캐시는 서버 인스턴스가 살아있는 동안 지속되는 반면,
-    //리퀘스트 메모이제이션은 페이지 렌더링이 완료되면 사라짐
+    { cache: "force-cache" },
+    // 하나라도 다이나믹 페이지가 있으면 다른 페이지도 다이나믹 페이지가 됨. force-cache를 사용하면 정적페이지로써 사용가능
   );
   if (!response.ok) {
     return <footer>제작 @winterlood</footer>;
