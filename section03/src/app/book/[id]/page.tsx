@@ -11,6 +11,9 @@ const mockData = {
   coverImgUrl:
     "https://shopping-phinf.pstatic.net/main_3888828/38888282618.20230913071643.jpg",
 };
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
 
 export default async function Page({
   params,
