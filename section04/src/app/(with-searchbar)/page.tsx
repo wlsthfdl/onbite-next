@@ -7,7 +7,7 @@ import { BookData } from "@/types";
 // 2. force-dynamic: 페이지를 강제로 다이나믹 페이지로 설정
 // 3. force-static: 페이지를 강제로 static 페이지로 설정
 // 4. error: 페이지를 강제로 static 페이지로 설정(설정하면 안되는 이유가 있다면 error 발생)
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 //등록된 모든 문서
 async function AllBooks() {
