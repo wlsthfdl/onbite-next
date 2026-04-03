@@ -6,7 +6,7 @@ import { BookData } from "@/types";
 async function Footer() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
-    { cache: "no-store" },
+    { cache: "force-cache" },
     // 하나라도 다이나믹 페이지가 있으면 다른 페이지도 다이나믹 페이지가 됨. force-cache를 사용하면 정적페이지로써 사용가능
   );
   if (!response.ok) {
