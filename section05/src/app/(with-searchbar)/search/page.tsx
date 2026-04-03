@@ -1,18 +1,12 @@
 import { BookData } from "@/types";
 import BookItem from "@/components/book-item";
 import { delay } from "@/util/delay";
+import { Suspense } from "react";
 
-//검색결과 페이지
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { q?: string };
-}) {
-  //fetch 실행(요청) -> 서버 검색 -> JSON반환
-
+async function SearchjResult({ q }: { q: string }) {
   await delay(1500); //1.5초 딜레이
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${searchParams.q}`,
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,
     { cache: "force-cache" },
   );
   if (!response.ok) {
@@ -29,5 +23,17 @@ export default async function Page({
         <BookItem key={book.id} {...book} />
       ))}
     </div>
+  );
+}
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { q?: string };
+}) {
+  return (
+    <Suspense key={searchParams.q || ""} fallback={<div>loading...</div>}>
+      <SearchjResult q={searchParams.q || ""}></SearchjResult>
+    </Suspense>
   );
 }

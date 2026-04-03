@@ -1,12 +1,15 @@
 import BookItem from "@/components/book-item";
 import style from "./page.module.css";
 import { BookData } from "@/types";
+import { delay } from "@/util/delay";
+import { Suspense } from "react";
 
 //등록된 모든 문서
 async function AllBooks() {
+  await delay(1500);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
-    { cache: "force-cache" }, //캐시 안됨(nest 15버전부터 기본은 캐시안되는 걸로 바뀜)
+    { cache: "force-cache" },
   );
   if (!response.ok) {
     return <div>오류가 발생했습니다..</div>;
@@ -24,6 +27,7 @@ async function AllBooks() {
 
 //지금 추천하는 도서
 async function RecoBooks() {
+  await delay(3000);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
     //{ cache: "force-cache" }, //무조건 캐싱
@@ -43,16 +47,22 @@ async function RecoBooks() {
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <div className={style.container}>
       <section>
         <h3>지금 추천하는 도서</h3>
-        <RecoBooks />
+        <Suspense fallback={<div>도서를 불러오는 중입니다...</div>}>
+          <RecoBooks />
+        </Suspense>
       </section>
       <section>
-        <h3>등록된 모든 도서</h3>
-        <AllBooks />
+        <Suspense fallback={<div>도서를 불러오는 중입니다...</div>}>
+          <h3>등록된 모든 도서</h3>
+          <AllBooks />
+        </Suspense>
       </section>
     </div>
   );
