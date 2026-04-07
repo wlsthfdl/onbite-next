@@ -61,12 +61,14 @@ async function ReviewList({ bookId }: { bookId: string }) {
   );
 }
 
-export default function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = await params;
+
   return (
     <div className={style.container}>
-      <BookDetail bookId={params.id}></BookDetail>
-      <ReviewEditor bookId={params.id} />
-      <ReviewList bookId={params.id} />
+      <BookDetail bookId={id}></BookDetail>
+      <ReviewEditor bookId={id} />
+      <ReviewList bookId={id} />
     </div>
   );
 }
