@@ -2,6 +2,7 @@ import { BookData } from "@/types";
 import BookItem from "@/components/book-item";
 import { delay } from "@/util/delay";
 import { Suspense } from "react";
+import { Metadata } from "next";
 
 async function SearchjResult({ q }: { q: string }) {
   await delay(1500); //1.5초 딜레이
@@ -26,14 +27,34 @@ async function SearchjResult({ q }: { q: string }) {
   );
 }
 
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}): Promise<Metadata> {
+  const { q } = await searchParams;
+
+  return {
+    title: `${q}: 한입북스 검색`,
+    description: `${q}의 검색 결과입니다`,
+    openGraph: {
+      title: `${q}: 한입북스 검색`,
+      description: `${q}의 검색 결과입니다`,
+      images: ["/thumbnail.png"],
+    },
+  };
+}
+
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }) {
+  const { q } = await searchParams;
+
   return (
-    <Suspense key={searchParams.q || ""} fallback={<div>loading...</div>}>
-      <SearchjResult q={searchParams.q || ""}></SearchjResult>
+    <Suspense key={q || ""} fallback={<div>loading...</div>}>
+      <SearchjResult q={q || ""}></SearchjResult>
     </Suspense>
   );
 }

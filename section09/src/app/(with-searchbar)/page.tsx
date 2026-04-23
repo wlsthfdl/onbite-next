@@ -3,6 +3,7 @@ import style from "./page.module.css";
 import { BookData } from "@/types";
 import { delay } from "@/util/delay";
 import { Suspense } from "react";
+import { Metadata } from "next";
 
 //등록된 모든 문서
 async function AllBooks() {
@@ -48,6 +49,16 @@ async function RecoBooks() {
 }
 
 export const dynamic = "force-dynamic";
+
+export const metaData: Metadata = {
+  title: "한입 북스",
+  description: "한입 북스에 등록된 도서를 만나보세요",
+  openGraph: {
+    title: "한입 북스",
+    description: "한입 북스에 등록된 도서를 만나보세요",
+    images: ["/thumbnail.png"], // '/' public 경로를 가리킨다
+  },
+};
 
 export default function Home() {
   return (
